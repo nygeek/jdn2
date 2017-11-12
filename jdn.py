@@ -175,7 +175,9 @@ class JulianDayNumber(object):
             self.year_type = 'normal'
         if self.year_type == 'leap':
             year_day -= 1
-        month_day = self.TOTAL_LENGTHS[self.leap
+        month_day = self.TOTAL_LENGTHS[self.leap][self.month - 1]
+
+        self.jdn = year_day + month_day + self.day
 
         # in the British Empire and successors, 1752-09-02
         if self.jdn > 2361221:
@@ -183,6 +185,7 @@ class JulianDayNumber(object):
             if self.month <= 2:
                 year -= 1
             self.jdn = self.jdn - (((year/100) * 3) / 4) - 1
+
         self.jdn_flag = True
 
     def calc_ymd(self):
@@ -222,10 +225,10 @@ class JulianDayNumber(object):
 
         self.year_type = 'normal'
         if years_in_cycle == 0:
-            if (self.year < 1752)
+            if (self.year < 1752):
                 self.year_type = 'leap'
-            elif: ((self.year % 100) == 0):
-                if ((self.year % 4000) !- 0):
+            elif ((self.year % 100) == 0):
+                if ((self.year % 4000) != 0):
                     if self.day > self.TOTAL_LENGTHS[self.year_type][2]:
                         self.day -= 1
                 else:
