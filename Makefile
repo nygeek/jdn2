@@ -14,7 +14,8 @@ help: ${FORCE}
 	cat Makefile
 
 SOURCE = \
-	jdn.py
+	jdn.py \
+	test-jdn.py
 
 FILES = \
 	${SOURCE} \
