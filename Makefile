@@ -25,6 +25,9 @@ FILES = \
 stuff.tar: ${FORCE}
 	tar -cvf stuff.tar ${FILES}
 
+test: ${FORCE}
+	python test-jdn.py
+
 # DATA = sample.txt
 
 pylint: ${SOURCE}
