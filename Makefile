@@ -19,6 +19,7 @@ SOURCE = \
 
 FILES = \
 	${SOURCE} \
+	.gitattributes \
 	Makefile
 
 stuff.tar: ${FORCE}
