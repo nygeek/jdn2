@@ -175,7 +175,7 @@ class JulianDayNumber(object):
             self.year_type = 'normal'
         if self.year_type == 'leap':
             year_day -= 1
-        month_day = self.TOTAL_LENGTHS[self.leap][self.month - 1]
+        month_day = self.TOTAL_LENGTHS[self.year_type][self.month - 1]
 
         self.jdn = year_day + month_day + self.day
 
@@ -270,6 +270,31 @@ def main():
             str(jdn2.get_total_lengths())
     print "Month names: " + \
             str(jdn2.get_month_names())
+
+    print "YMD to JDN test"
+    print "2017-11-12"
+    jdn1.set_ymd(2017, 11, 12)
+    print jdn1.get_jdn()
+
+    print "2017-11-13"
+    jdn1.set_ymd(2017, 11, 13)
+    print jdn1.get_jdn()
+
+    print "1752-09-01"
+    jdn1.set_ymd(1752, 9, 1)
+    print jdn1.get_jdn()
+
+    print "1752-09-02"
+    jdn1.set_ymd(1752, 9, 2)
+    print jdn1.get_jdn()
+
+    print "1752-09-13"
+    jdn1.set_ymd(1752, 9, 14)
+    print jdn1.get_jdn()
+
+    print "1752-09-14"
+    jdn1.set_ymd(1752, 9, 15)
+    print jdn1.get_jdn()
 
 if __name__ == '__main__':
     main()
