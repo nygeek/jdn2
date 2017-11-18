@@ -51,11 +51,11 @@ def main():
     jdn1.set_ymd(1752, 9, 2)
     print jdn1.get_jdn()
 
-    print "1752-09-13"
+    print "1752-09-14"
     jdn1.set_ymd(1752, 9, 14)
     print jdn1.get_jdn()
 
-    print "1752-09-14"
+    print "1752-09-15"
     jdn1.set_ymd(1752, 9, 15)
     print jdn1.get_jdn()
 
@@ -77,13 +77,46 @@ def main():
     jdn1.set_jdn(2361221)
     print str(jdn1.get_ymd())
 
-    print "1752-09-13 from 2361222"
+    print "1752-09-14 from 2361222"
     jdn1.set_jdn(2361222)
     print str(jdn1.get_ymd())
 
-    print "1752-09-14 from 2361223"
+    print "1752-09-15 from 2361223"
     jdn1.set_jdn(2361223)
     print str(jdn1.get_ymd())
+
+    print "now to test 9999647 dates"
+
+    day_histogram = {}
+    for day in range(1, 32):
+        day_histogram[day] = 0
+
+    month_histogram = {}
+    for month in range(1, 13):
+        month_histogram[month] = 0
+
+    for jdn_probe in range(0, 9999647):
+        jdn1.set_jdn(jdn_probe)
+        (year, month, day) = jdn1.get_ymd()
+        jdn2.set_ymd(year, month, day)
+        jdn_check = jdn2.get_jdn()
+        month_histogram[month] += 1
+        day_histogram[day] += 1
+        if jdn_probe != jdn_check:
+            mm = ('00' + str(month))[-2:]
+            dd = ('00' + str(day))[-2:]
+            print "Error: probe: " + str(jdn_probe) + \
+                    " check: " + str( jdn_check) + " => " + \
+                    str(jdn_probe - jdn_check) + \
+                    " (" + str(year) + "-" + mm + "-" + dd + ")"
+
+    print "\nDay breakdown:"
+    for day in day_histogram.keys():
+        print str(day) + ": " + str(day_histogram[day])
+
+    print "\nMonth breakdown:"
+    for month in month_histogram.keys():
+        print str(month) + ": " + str(month_histogram[month])
 
 if __name__ == '__main__':
     main()
