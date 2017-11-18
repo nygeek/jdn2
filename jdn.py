@@ -210,7 +210,7 @@ class JulianDayNumber(object):
 
         if (self.day <= 365):
             years_in_cycle = 0
-        elif ((377 <= self.day) and (self.day <= 730)):
+        elif ((366 <= self.day) and (self.day <= 730)):
             self.day -= 366
             years_in_cycle = 1
         elif ((731 <= self.day) and (self.day <= 1095)):
@@ -228,7 +228,7 @@ class JulianDayNumber(object):
             if (self.year < 1752):
                 self.year_type = 'leap'
             elif ((self.year % 100) == 0):
-                if ((self.year % 4000) != 0):
+                if ((self.year % 400) != 0):
                     if self.day > self.TOTAL_LENGTHS[self.year_type][2]:
                         self.day -= 1
                 else:

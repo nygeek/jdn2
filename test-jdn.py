@@ -59,5 +59,31 @@ def main():
     jdn1.set_ymd(1752, 9, 15)
     print jdn1.get_jdn()
 
+    print "JDN to YMD test"
+
+    print "2017-11-12 from 2458070"
+    jdn1.set_jdn(2458070)
+    print str(jdn1.get_ymd())
+
+    print "2017-11-13 from 2458071"
+    jdn1.set_jdn(2458071)
+    print str(jdn1.get_ymd())
+
+    print "1752-09-01 from 2361220"
+    jdn1.set_jdn(2361220)
+    print str(jdn1.get_ymd())
+
+    print "1752-09-02 from 2361221"
+    jdn1.set_jdn(2361221)
+    print str(jdn1.get_ymd())
+
+    print "1752-09-13 from 2361222"
+    jdn1.set_jdn(2361222)
+    print str(jdn1.get_ymd())
+
+    print "1752-09-14 from 2361223"
+    jdn1.set_jdn(2361223)
+    print str(jdn1.get_ymd())
+
 if __name__ == '__main__':
     main()
