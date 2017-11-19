@@ -5,6 +5,7 @@ Run some tests on the jdn.py class.
 """
 
 from jdn import JulianDayNumber
+import psutil
 
 def iso8601_from_ymd(year, month, day):
     """Format three integers into an ISO8601 string."""
@@ -15,6 +16,9 @@ def iso8601_from_ymd(year, month, day):
 
 def main():
     """Main body."""
+
+    # capture timing information
+    cputime_0 = psutil.cpu_times()
 
     jdn1 = JulianDayNumber("en")
     jdn2 = JulianDayNumber("fr", "leap")
@@ -81,7 +85,7 @@ def main():
 
     for jdn_probe in range(0, 9999647):
         jdn1.set_jdn(jdn_probe)
-        (year, month, day) = jdn1.get_ymd()
+        [year, month, day] = jdn1.get_ymd()
         jdn2.set_ymd(year, month, day)
         jdn_check = jdn2.get_jdn()
         month_histogram[month] += 1
@@ -99,6 +103,15 @@ def main():
     print "\nMonth breakdown:"
     for month in month_histogram:
         print str(month) + ": " + str(month_histogram[month])
+
+    cputime_1 = psutil.cpu_times()
+    print
+    # index 0 is user
+    # index 1 is nice
+    # index 2 is system
+    # index 3 is idle
+    print "User time: " + str(cputime_1[0] - cputime_0[0])
+    print "System time: " + str(cputime_1[2] - cputime_0[2])
 
 if __name__ == '__main__':
     main()

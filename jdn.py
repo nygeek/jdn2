@@ -241,10 +241,13 @@ class JulianDayNumber(object):
                 # [Single exception]
                 self.year_type = 'leap'
 
-        for self.ymd[1] in range(0, 13):
-            if self.ymd[2] < \
-                    self.TOTAL_LENGTHS[self.year_type][self.ymd[1]]:
-                break
+        def f(x): return \
+                self.ymd[2] < self.TOTAL_LENGTHS[self.year_type][x]
+        self.ymd[1] = filter(f, range(0, 13))[0]
+#       for self.ymd[1] in range(0, 13):
+#           if self.ymd[2] < \
+#                   self.TOTAL_LENGTHS[self.year_type][self.ymd[1]]:
+#               break
         self.ymd[2] -= self.TOTAL_LENGTHS[self.year_type][self.ymd[1] - 1]
         self.ymd[2] += 1
 
