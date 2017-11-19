@@ -15,7 +15,7 @@ help: ${FORCE}
 
 SOURCE = \
 	jdn.py \
-	test-jdn.py
+	testjdn.py
 
 FILES = \
 	${SOURCE} \
@@ -26,7 +26,7 @@ stuff.tar: ${FORCE}
 	tar -cvf stuff.tar ${FILES}
 
 test: ${FORCE}
-	python test-jdn.py
+	python testjdn.py
 
 # DATA = sample.txt
 
