@@ -1,4 +1,4 @@
-""" test-jdn.py
+""" testjdn.py
 
 Run some tests on the jdn.py class.
 
@@ -6,11 +6,27 @@ Run some tests on the jdn.py class.
 
 from jdn import JulianDayNumber
 
+def iso8601_from_ymd(year, month, day):
+    """Format three integers into an ISO8601 string."""
+    display_year = ('0000' + str(year))[-4:]
+    display_month = ('00' + str(month))[-2:]
+    display_day = ('00' + str(day))[-2:]
+    return display_year + "-" + display_month + "-" + display_day
+
 def main():
     """Main body."""
 
     jdn1 = JulianDayNumber("en")
     jdn2 = JulianDayNumber("fr", "leap")
+
+    test_plan = [
+        {'jdn':2458070, 'ymd':(2017, 11, 12)},
+        {'jdn':2458071, 'ymd':(2017, 11, 13)},
+        {'jdn':2361220, 'ymd':(1752, 9, 1)},
+        {'jdn':2361221, 'ymd':(1752, 9, 2)},
+        {'jdn':2361222, 'ymd':(1752, 9, 14)},
+        {'jdn':2361223, 'ymd':(1752, 9, 15)}
+    ]
 
     print "jdn1"
     print "Language: " + jdn1.get_language()
@@ -34,56 +50,24 @@ def main():
     print "Month names: " + \
             str(jdn2.get_month_names())
 
-    print "YMD to JDN test"
-    print "2017-11-12"
-    jdn1.set_ymd(2017, 11, 12)
-    print jdn1.get_jdn()
-
-    print "2017-11-13"
-    jdn1.set_ymd(2017, 11, 13)
-    print jdn1.get_jdn()
-
-    print "1752-09-01"
-    jdn1.set_ymd(1752, 9, 1)
-    print jdn1.get_jdn()
-
-    print "1752-09-02"
-    jdn1.set_ymd(1752, 9, 2)
-    print jdn1.get_jdn()
-
-    print "1752-09-14"
-    jdn1.set_ymd(1752, 9, 14)
-    print jdn1.get_jdn()
-
-    print "1752-09-15"
-    jdn1.set_ymd(1752, 9, 15)
-    print jdn1.get_jdn()
+    print "\nYMD to JDN test"
+    for test in range(0, len(test_plan)):
+        jdn = test_plan[test]["jdn"]
+        (year, month, day) = test_plan[test]["ymd"]
+        print iso8601_from_ymd(year, month, day) + " => " + str(jdn)
+        jdn1.set_ymd(year, month, day)
+        print str(jdn1.get_jdn())
+        print
 
     print "JDN to YMD test"
-
-    print "2017-11-12 from 2458070"
-    jdn1.set_jdn(2458070)
-    print str(jdn1.get_ymd())
-
-    print "2017-11-13 from 2458071"
-    jdn1.set_jdn(2458071)
-    print str(jdn1.get_ymd())
-
-    print "1752-09-01 from 2361220"
-    jdn1.set_jdn(2361220)
-    print str(jdn1.get_ymd())
-
-    print "1752-09-02 from 2361221"
-    jdn1.set_jdn(2361221)
-    print str(jdn1.get_ymd())
-
-    print "1752-09-14 from 2361222"
-    jdn1.set_jdn(2361222)
-    print str(jdn1.get_ymd())
-
-    print "1752-09-15 from 2361223"
-    jdn1.set_jdn(2361223)
-    print str(jdn1.get_ymd())
+    for test in range(0, len(test_plan)):
+        jdn = test_plan[test]["jdn"]
+        (year, month, day) = test_plan[test]["ymd"]
+        print str(jdn) + " => " + iso8601_from_ymd(year, month, day)
+        jdn2.set_jdn(jdn)
+        (year, month, day) = jdn2.get_ymd()
+        print iso8601_from_ymd(year, month, day)
+        print
 
     print "now to test 9999647 dates"
 
@@ -103,19 +87,17 @@ def main():
         month_histogram[month] += 1
         day_histogram[day] += 1
         if jdn_probe != jdn_check:
-            mm = ('00' + str(month))[-2:]
-            dd = ('00' + str(day))[-2:]
             print "Error: probe: " + str(jdn_probe) + \
-                    " check: " + str( jdn_check) + " => " + \
+                    " check: " + str(jdn_check) + " => " + \
                     str(jdn_probe - jdn_check) + \
-                    " (" + str(year) + "-" + mm + "-" + dd + ")"
+                    " (" + iso8601_from_ymd(year, month, day) + ")"
 
     print "\nDay breakdown:"
-    for day in day_histogram.keys():
+    for day in day_histogram:
         print str(day) + ": " + str(day_histogram[day])
 
     print "\nMonth breakdown:"
-    for month in month_histogram.keys():
+    for month in month_histogram:
         print str(month) + ": " + str(month_histogram[month])
 
 if __name__ == '__main__':
