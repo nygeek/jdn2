@@ -24,8 +24,16 @@ Given a JDN, report the Gregorian date
 # 2017-11-12 [X] Parameterize by language.
 #
 
+# indices into the ymd vector
+YEAR = 0
+MONTH = 1
+DAY = 2
+
 class JulianDayNumber(object):
     """Julian Day Number class."""
+    global YEAR
+    global MONTH
+    global DAY
 
     MONTH_NAMES = {}
     MONTH_NAMES['en'] = [
@@ -126,25 +134,25 @@ class JulianDayNumber(object):
         """Return the year."""
         if not self.ymd_flag:
             self.calc_ymd()
-        return self.ymd[0]
+        return self.ymd[YEAR]
 
     def get_month(self):
         """Return the month."""
         if not self.ymd_flag:
             self.calc_ymd()
-        return self.ymd[1]
+        return self.ymd[MONTH]
 
     def get_monthname(self):
         """Return the text name of the month."""
         if not self.ymd_flag:
             self.calc_ymd()
-        return self.MONTH_NAMES[self.ymd[1] - 1]
+        return self.MONTH_NAMES[self.ymd[MONTH] - 1]
 
     def get_day(self):
         """Return the day."""
         if not self.ymd_flag:
             self.calc_ymd()
-        return self.ymd[2]
+        return self.ymd[DAY]
 
     def get_day_of_week(self):
         """Return the day of week."""
@@ -162,7 +170,7 @@ class JulianDayNumber(object):
     def calc_jdn(self):
         """Calculate the JDN from year, month, and day."""
         # Day 0 of JDN is 1 January 4713 BCE
-        year = self.ymd[0] + 4712
+        year = self.ymd[YEAR] + 4712
         year_day = 365 * year + (year / 4)
 
         if (year % 4) == 0:
@@ -171,15 +179,15 @@ class JulianDayNumber(object):
             self.year_type = 'normal'
         if self.year_type == 'leap':
             year_day -= 1
-        month_day = self.TOTAL_LENGTHS[self.year_type][self.ymd[1] - 1]
+        month_day = self.TOTAL_LENGTHS[self.year_type][self.ymd[MONTH] - 1]
 
-        self.jdn = year_day + month_day + self.ymd[2]
+        self.jdn = year_day + month_day + self.ymd[DAY]
 
         # in the British Empire and successors, after 1752-09-02
         if self.jdn > 2361221:
             self.jdn -= 1
-            year = self.ymd[0] - 300
-            if self.ymd[1] <= 2:
+            year = self.ymd[YEAR] - 300
+            if self.ymd[MONTH] <= 2:
                 year -= 1
             self.jdn -= (((year/100) * 3) / 4)
 
@@ -199,39 +207,40 @@ class JulianDayNumber(object):
             jdn = self.jdn + ((century * 3) / 4) - 2
 
         year_accumulator = (jdn / 1461) * 4
-        self.ymd[2] = jdn % 1461
+        self.ymd[DAY] = jdn % 1461
 
         #    0 -  365 is year 0, a leap year,   366 days long
         #  366 -  730 is year 1, a normal year, 365 days long
         #  732 - 1096 is year 2, a normal year, 365 days long
         # 1097 - 1461 is year 3, a normal year, 365 days long
 
-        if self.ymd[2] <= 365:
+        if self.ymd[DAY] <= 365:
             years_in_cycle = 0
-        elif (self.ymd[2] >= 366) and (self.ymd[2] < 731):
-            self.ymd[2] -= 366
+        elif (self.ymd[DAY] >= 366) and (self.ymd[DAY] < 731):
+            self.ymd[DAY] -= 366
             years_in_cycle = 1
-        elif (self.ymd[2] >= 731) and (self.ymd[2] < 1096):
-            self.ymd[2] -= 731
+        elif (self.ymd[DAY] >= 731) and (self.ymd[DAY] < 1096):
+            self.ymd[DAY] -= 731
             years_in_cycle = 2
         else:
-            self.ymd[2] -= 1096
+            self.ymd[DAY] -= 1096
             years_in_cycle = 3
 
         year_accumulator += years_in_cycle
-        self.ymd[0] = year_accumulator - 4712
+        self.ymd[YEAR] = year_accumulator - 4712
 
         self.year_type = 'normal'
         if years_in_cycle == 0:
-            if self.ymd[0] < 1752:
+            if self.ymd[YEAR] < 1752:
                 # Pre-1752: Julian Calendar: every %4==0 is leap
                 self.year_type = 'leap'
-            elif (self.ymd[0] % 100) == 0:
-                if (self.ymd[0] % 400) != 0:
+            elif (self.ymd[YEAR] % 100) == 0:
+                if (self.ymd[YEAR] % 400) != 0:
                 # Century not divisible by 400 is normal year
                 # [Double exception]
-                    if self.ymd[2] > self.TOTAL_LENGTHS[self.year_type][2]:
-                        self.ymd[2] -= 1
+                    if self.ymd[DAY] > \
+                            self.TOTAL_LENGTHS[self.year_type][2]:
+                        self.ymd[DAY] -= 1
                 else:
                     # Century divisible by 400 is leap year
                     # [Triple exception]
@@ -241,15 +250,13 @@ class JulianDayNumber(object):
                 # [Single exception]
                 self.year_type = 'leap'
 
-        def f(x): return \
-                self.ymd[2] < self.TOTAL_LENGTHS[self.year_type][x]
-        self.ymd[1] = filter(f, range(0, 13))[0]
-#       for self.ymd[1] in range(0, 13):
-#           if self.ymd[2] < \
-#                   self.TOTAL_LENGTHS[self.year_type][self.ymd[1]]:
-#               break
-        self.ymd[2] -= self.TOTAL_LENGTHS[self.year_type][self.ymd[1] - 1]
-        self.ymd[2] += 1
+        def shorter_p(month):
+            """Filter function for finding month from day-in-year."""
+            return self.ymd[DAY] < self.TOTAL_LENGTHS[self.year_type][month]
+        self.ymd[MONTH] = filter(shorter_p, range(0, 13))[0]
+        self.ymd[DAY] -= \
+                self.TOTAL_LENGTHS[self.year_type][self.ymd[MONTH] - 1]
+        self.ymd[DAY] += 1
 
         self.ymd_flag = True
 
