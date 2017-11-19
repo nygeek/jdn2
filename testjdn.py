@@ -57,7 +57,7 @@ def main():
     print "\nYMD to JDN test"
     for test in range(0, len(test_plan)):
         jdn = test_plan[test]["jdn"]
-        (year, month, day) = test_plan[test]["ymd"]
+        [year, month, day] = test_plan[test]["ymd"]
         print iso8601_from_ymd(year, month, day) + " => " + str(jdn)
         jdn1.set_ymd(year, month, day)
         print str(jdn1.get_jdn())
@@ -66,10 +66,10 @@ def main():
     print "JDN to YMD test"
     for test in range(0, len(test_plan)):
         jdn = test_plan[test]["jdn"]
-        (year, month, day) = test_plan[test]["ymd"]
+        [year, month, day] = test_plan[test]["ymd"]
         print str(jdn) + " => " + iso8601_from_ymd(year, month, day)
         jdn2.set_jdn(jdn)
-        (year, month, day) = jdn2.get_ymd()
+        [year, month, day] = jdn2.get_ymd()
         print iso8601_from_ymd(year, month, day)
         print
 

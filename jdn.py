@@ -146,7 +146,7 @@ class JulianDayNumber(object):
         """Return the text name of the month."""
         if not self.ymd_flag:
             self.calc_ymd()
-        return self.MONTH_NAMES[self.ymd[MONTH] - 1]
+        return self.MONTH_NAMES[self.language][self.ymd[MONTH] - 1]
 
     def get_day(self):
         """Return the day."""
@@ -262,8 +262,6 @@ class JulianDayNumber(object):
 
 def main():
     """Main body."""
-
-
 
 if __name__ == '__main__':
     main()

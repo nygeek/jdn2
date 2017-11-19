@@ -15,6 +15,7 @@ help: ${FORCE}
 
 SOURCE = \
 	jdn.py \
+	julian.py \
 	testjdn.py
 
 FILES = \
