@@ -6,6 +6,7 @@
 
 DIRS = "."
 DIRPATH="~/projects/j/jdn"
+BINRELPATH="../projects/j/jdn"
 
 HOSTS = waffle pancake
 PUSH_FILES = $(HOSTS:%=.%_push)
@@ -15,6 +16,7 @@ help: ${FORCE}
 
 SOURCE = \
 	jdn.py \
+	julian \
 	julian.py \
 	testjdn.py
 
@@ -28,6 +30,9 @@ stuff.tar: ${FORCE}
 
 test: ${FORCE}
 	python testjdn.py
+
+install: ${FORCE}
+	(cd ~/bin; ln -s ${BINRELPATH}/julian julian)
 
 # DATA = sample.txt
 

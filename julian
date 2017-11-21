@@ -1,0 +1,4 @@
+#!/bin/bash
+
+JULIANDIR="${HOME}/projects/j/jdn"
+/usr/bin/python ${JULIANDIR}/julian.py $*
