@@ -55,6 +55,7 @@ def main():
         "Friday",
         "Saturday"
     ]
+
     print "Date is: " + daynames[day_of_week] + ", " +\
             str(jdn1.get_day()) + " " +\
             jdn1.get_monthname() + " " +\

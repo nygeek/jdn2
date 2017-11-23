@@ -18,6 +18,7 @@ SOURCE = \
 	jdn.py \
 	julian \
 	julian.py \
+	nailuj.py \
 	testjdn.py
 
 FILES = \
@@ -32,7 +33,10 @@ test: ${FORCE}
 	python testjdn.py
 
 install: ${FORCE}
+	- rm -f ~/bin/julian
+	- rm -f ~/bin/nailuj
 	(cd ~/bin; ln -s ${BINRELPATH}/julian julian)
+	(cd ~/bin; ln -s ${BINRELPATH}/nailuj nailuj)
 
 # DATA = sample.txt
 
