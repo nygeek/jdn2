@@ -1,4 +1,4 @@
 #!/bin/bash
 
-JULIANDIR="${HOME}/projects/j/jdn"
-/usr/bin/python ${JULIANDIR}/nailuj.py $*
+JULIANDIR="${HOME}/projects/j/jdn2"
+/usr/local/bin/python2 ${JULIANDIR}/nailuj.py $*
