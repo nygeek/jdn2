@@ -7,45 +7,47 @@
 #
 
 PYTHON := "/usr/local/bin/python2"
+PYLINT := ${PYTHON} --pylint
 
 DIRS = "."
 DIRPATH="~/projects/j/jdn2"
 BINRELPATH="../projects/j/jdn2"
 
-HOSTS = waffle pancake
-PUSH_FILES = $(HOSTS:%=.%_push)
-
-help: ${FORCE}
+PHONY: help
+help:
 	cat Makefile
 
 SOURCE = \
 	jdn.py \
-	julian \
 	julian.py \
 	nailuj.py \
-	testjdn.py
+	test2.py
 
 FILES = \
 	${SOURCE} \
+	julian.sh \
+	nailuj.sh \
 	.gitattributes \
 	Makefile
 
-stuff.tar: ${FORCE}
+PHONY: stuff.tar
+stuff.tar:
 	tar -cvf stuff.tar ${FILES}
 
-test: ${FORCE}
-	${PYTHON} testjdn.py
+PHONY: test
+test:
+	${PYTHON} test2.py > test.out
+	diff test.out test.reference
 
-install: ${FORCE}
+PHONY: install
+install:
 	- rm -f ~/bin/julian
 	- rm -f ~/bin/nailuj
 	(cd ~/bin; ln -s ${BINRELPATH}/julian julian)
 	(cd ~/bin; ln -s ${BINRELPATH}/nailuj nailuj)
 
-# DATA = sample.txt
-
 pylint: ${SOURCE}
-	pylint ${SOURCE}
+	${PYLINT} ${SOURCE}
 
 # GIT operations
 
@@ -57,14 +59,3 @@ commit: .gitattributes
 
 log: .gitattributes
 	git log --pretty=oneline
-
-# Distribution to other hosts
-
-push: ${PUSH_FILES}
-	rm ${PUSH_FILES}
-
-.%_push:
-	rsync -az --exclude=".git*" --exclude=".*_push" -e ssh ${DIRS} $*:${DIRPATH}
-	touch $@
-
-FORCE: 
