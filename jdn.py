@@ -185,6 +185,10 @@ class JulianDayNumber(object):
 
         # in the British Empire and successors, after 1752-09-02
         if self.jdn > 2361221:
+            yy = self.ymd[YEAR]
+            if yy % 100 == 0 and yy % 400 != 0:
+                self.leap = 'normal'
+                year_day -= 1
             self.jdn -= 1
             year = self.ymd[YEAR] - 300
             if self.ymd[MONTH] <= 2:

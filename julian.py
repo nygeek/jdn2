@@ -25,7 +25,7 @@ def main():
     program_name = sys.argv[0]
     # print "program_name: " + program_name
 
-    parser = argparse.ArgumentParser(description='Accept a date.')
+    parser = argparse.ArgumentParser(description='Accept a date. [Python2]')
 
     parser.add_argument('year', type=int, nargs='?',\
             default=today_year, help='Year number')

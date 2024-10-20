@@ -3,10 +3,14 @@
 # Starting from scratch 2017-11-12
 # by Marc Donner (marc.donner@gmail.com)
 #
+# $Id$
+#
+
+PYTHON := "/usr/local/bin/python2"
 
 DIRS = "."
-DIRPATH="~/projects/j/jdn"
-BINRELPATH="../projects/j/jdn"
+DIRPATH="~/projects/j/jdn2"
+BINRELPATH="../projects/j/jdn2"
 
 HOSTS = waffle pancake
 PUSH_FILES = $(HOSTS:%=.%_push)
@@ -30,7 +34,7 @@ stuff.tar: ${FORCE}
 	tar -cvf stuff.tar ${FILES}
 
 test: ${FORCE}
-	python testjdn.py
+	${PYTHON} testjdn.py
 
 install: ${FORCE}
 	- rm -f ~/bin/julian

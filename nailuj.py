@@ -28,7 +28,7 @@ def main():
     program_name = sys.argv[0]
     # print "program_name: " + program_name
 
-    parser = argparse.ArgumentParser(description='Accept a JDN.')
+    parser = argparse.ArgumentParser(description='Accept a JDN.  [Python2]')
 
     parser.add_argument('jdn', type=int, nargs='?',\
             default=today_jdn, help='Julian Day Number')
