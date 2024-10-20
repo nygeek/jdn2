@@ -28,7 +28,8 @@ FILES = \
 	julian.sh \
 	nailuj.sh \
 	.gitattributes \
-	Makefile
+	Makefile \
+	test.out
 
 PHONY: stuff.tar
 stuff.tar:
