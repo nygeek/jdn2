@@ -6,14 +6,14 @@
 # $Id$
 #
 
-PYTHON := "/usr/local/bin/python2"
+PYTHON := /usr/local/bin/python2
 PYLINT := ${PYTHON} -m pylint
 
 DIRS = "."
 DIRPATH="~/projects/j/jdn2"
 BINRELPATH="../projects/j/jdn2"
 
-PHONY: help
+.PHONY: help
 help:
 	cat Makefile
 
@@ -33,16 +33,16 @@ FILES = \
 	test.out \
 	test.reference
 
-PHONY: stuff.tar
+.PHONY: stuff.tar
 stuff.tar:
 	tar -cvf stuff.tar ${FILES}
 
-PHONY: test
+.PHONY: test
 test:
 	${PYTHON} test2.py > test.out
 	diff test.out test.reference
 
-PHONY: install
+.PHONY: install
 install:
 	- rm -f ~/bin/julian
 	- rm -f ~/bin/nailuj
