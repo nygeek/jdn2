@@ -30,7 +30,8 @@ FILES = \
 	nailuj.sh \
 	Makefile \
 	pylintrc \
-	test.out
+	test.out \
+	test.reference
 
 PHONY: stuff.tar
 stuff.tar:
