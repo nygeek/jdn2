@@ -30,6 +30,7 @@ FILES = \
 	nailuj.sh \
 	Makefile \
 	pylintrc \
+	README.md \
 	test.out \
 	test.reference
 
