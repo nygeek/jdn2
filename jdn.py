@@ -31,9 +31,26 @@ DAY = 2
 
 class JulianDayNumber(object):
     """Julian Day Number class."""
-    global YEAR
-    global MONTH
-    global DAY
+
+    DAY_NAMES = {}
+    DAY_NAMES['en'] = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+        ]
+    DAY_NAMES['fr'] = [
+        "dimanche",
+        "lundi",
+        "mardi",
+        "mercredi",
+        "juedi",
+        "vendredi",
+        "samedi"
+        ]
 
     MONTH_NAMES = {}
     MONTH_NAMES['en'] = [
@@ -84,6 +101,7 @@ class JulianDayNumber(object):
         self.ymd = [-1, -1, -1]
         self.jdn_flag = False
         self.ymd_flag = False
+        self.leap = year_type
 
     def get_month_lengths(self, year_type=None):
         """Get the month lengths."""
@@ -154,12 +172,18 @@ class JulianDayNumber(object):
             self.calc_ymd()
         return self.ymd[DAY]
 
-    def get_day_of_week(self):
+    def get_dow(self):
         """Return the day of week."""
         if not self.jdn_flag:
             self.calc_jdn()
         return (self.jdn + 1) % 7
         # this way 0 => Sunday, 1 => Monday, ..., 6 => Sunday
+
+    def get_dow_name(self):
+        """Return the day of week."""
+        if not self.jdn_flag:
+            self.calc_jdn()
+        return self.DAY_NAMES[self.language][(self.jdn + 1) % 7]
 
     def get_ymd(self):
         """Return the year, month, day as a tuple."""
@@ -185,8 +209,8 @@ class JulianDayNumber(object):
 
         # in the British Empire and successors, after 1752-09-02
         if self.jdn > 2361221:
-            yy = self.ymd[YEAR]
-            if yy % 100 == 0 and yy % 400 != 0:
+            _yy = self.ymd[YEAR]
+            if _yy % 100 == 0 and _yy % 400 != 0:
                 self.leap = 'normal'
                 year_day -= 1
             self.jdn -= 1

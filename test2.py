@@ -4,9 +4,8 @@ Run some tests on the jdn.py class.
 
 """
 
-from jdn import JulianDayNumber
-# import psutil
 import time
+from jdn import JulianDayNumber
 
 def iso8601_from_ymd(year, month, day):
     """Format three integers into an ISO8601 string."""
@@ -19,7 +18,6 @@ def main():
     """Main body."""
 
     # capture timing information
-    # cputime_0 = psutil.cpu_times()
     cputime_0 = time.time()
 
     jdn1 = JulianDayNumber("en")
@@ -57,18 +55,18 @@ def main():
             str(jdn2.get_month_names())
 
     print "\nYMD to JDN test"
-    for test in range(0, len(test_plan)):
-        jdn = test_plan[test]["jdn"]
-        [year, month, day] = test_plan[test]["ymd"]
+    for test in test_plan:
+        jdn = test["jdn"]
+        [year, month, day] = test["ymd"]
         print iso8601_from_ymd(year, month, day) + " => " + str(jdn)
         jdn1.set_ymd(year, month, day)
         print str(jdn1.get_jdn())
         print
 
     print "JDN to YMD test"
-    for test in range(0, len(test_plan)):
-        jdn = test_plan[test]["jdn"]
-        [year, month, day] = test_plan[test]["ymd"]
+    for test in test_plan:
+        jdn = test["jdn"]
+        [year, month, day] = test["ymd"]
         print str(jdn) + " => " + iso8601_from_ymd(year, month, day)
         jdn2.set_jdn(jdn)
         [year, month, day] = jdn2.get_ymd()
@@ -106,16 +104,9 @@ def main():
     for month in month_histogram:
         print str(month) + ": " + str(month_histogram[month])
 
-    # cputime_1 = psutil.cpu_times()
     cputime_1 = time.time()
     print
-    # index 0 is user
-    # index 1 is nice
-    # index 2 is system
-    # index 3 is idle
     print "Elapesed time: " + str(cputime_1 - cputime_0)
-    # print "User time: " + str(cputime_1[0] - cputime_0[0])
-    # print "System time: " + str(cputime_1[2] - cputime_0[2])
 
 if __name__ == '__main__':
     main()

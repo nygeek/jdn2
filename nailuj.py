@@ -21,12 +21,12 @@ def main():
     today_month = today.month
     today_day = today.day
 
-    jdn1 = JulianDayNumber("en")
-    jdn1.set_ymd(today_year, today_month, today_day)
-    today_jdn = jdn1.get_jdn()
+    engine = JulianDayNumber("en")
+    engine.set_ymd(today_year, today_month, today_day)
+    today_jdn = engine.get_jdn()
 
-    program_name = sys.argv[0]
-    # print "program_name: " + program_name
+    _program_name = sys.argv[0]
+    # print "_program_name: " + _program_name
 
     parser = argparse.ArgumentParser(description='Accept a JDN.  [Python2]')
 
@@ -34,24 +34,15 @@ def main():
             default=today_jdn, help='Julian Day Number')
 
     args = parser.parse_args()
-    jdn1.set_jdn(args.jdn)
+    engine.set_jdn(args.jdn)
 
-    day_of_week = jdn1.get_day_of_week()
-    daynames = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-    ]
+    dow_name = engine.get_dow_name()
 
-    print "JDN is: " + str(jdn1.get_jdn())
-    print "Date is: " + daynames[day_of_week] + ", " +\
-            str(jdn1.get_day()) + " " +\
-            jdn1.get_monthname() + " " +\
-            str(jdn1.get_year())
+    print "JDN is: " + str(engine.get_jdn())
+    print "Date is: " + dow_name + ", " +\
+            str(engine.get_day()) + " " +\
+            engine.get_monthname() + " " +\
+            str(engine.get_year())
 
 if __name__ == '__main__':
     main()

@@ -22,8 +22,8 @@ def main():
     today_month = today.month
     today_day = today.day
 
-    program_name = sys.argv[0]
-    # print "program_name: " + program_name
+    _program_name = sys.argv[0]
+    # print "_program_name: " + _program_name
 
     parser = argparse.ArgumentParser(description='Accept a date. [Python2]')
 
@@ -43,24 +43,15 @@ def main():
     # print "Day"
     # print args.day
 
-    jdn1 = JulianDayNumber("en")
-    jdn1.set_ymd(args.year, args.month, args.day)
-    day_of_week = jdn1.get_day_of_week()
-    daynames = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-    ]
+    engine = JulianDayNumber("en")
+    engine.set_ymd(args.year, args.month, args.day)
+    dow_name = engine.get_dow_name()
 
-    print "Date is: " + daynames[day_of_week] + ", " +\
-            str(jdn1.get_day()) + " " +\
-            jdn1.get_monthname() + " " +\
-            str(jdn1.get_year())
-    print "JDN is: " + str(jdn1.get_jdn())
+    print "Date is: " + dow_name + ", " +\
+            str(engine.get_day()) + " " +\
+            engine.get_monthname() + " " +\
+            str(engine.get_year())
+    print "JDN is: " + str(engine.get_jdn())
 
 if __name__ == '__main__':
     main()

@@ -7,7 +7,7 @@
 #
 
 PYTHON := "/usr/local/bin/python2"
-PYLINT := ${PYTHON} --pylint
+PYLINT := ${PYTHON} -m pylint
 
 DIRS = "."
 DIRPATH="~/projects/j/jdn2"
@@ -25,10 +25,11 @@ SOURCE = \
 
 FILES = \
 	${SOURCE} \
+	.gitattributes \
 	julian.sh \
 	nailuj.sh \
-	.gitattributes \
 	Makefile \
+	pylintrc \
 	test.out
 
 PHONY: stuff.tar
@@ -44,10 +45,10 @@ PHONY: install
 install:
 	- rm -f ~/bin/julian
 	- rm -f ~/bin/nailuj
-	(cd ~/bin; ln -s ${BINRELPATH}/julian julian)
-	(cd ~/bin; ln -s ${BINRELPATH}/nailuj nailuj)
+	(cd ~/bin; ln -s ${BINRELPATH}/julian.sh julian)
+	(cd ~/bin; ln -s ${BINRELPATH}/nailuj.sh nailuj)
 
-pylint: ${SOURCE}
+lint: ${SOURCE}
 	${PYLINT} ${SOURCE}
 
 # GIT operations
